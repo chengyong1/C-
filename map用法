@@ -1,0 +1,37 @@
+//
+// Created by chengyong on 18-3-12.
+//
+//map<关键字类型，值类型>,关键字对应first，值对应second
+#include "bits/stdc++.h"
+using namespace std;
+
+int main()
+{
+    map<string, long int> phone_book;
+
+    //创建电话号码簿
+    phone_book["chengyong"] = 13881918923;
+    phone_book["caicheng"] = 18827382993;
+    phone_book["future"] = 13881918928;
+
+    //输出电话簿
+    cout << "电话簿为：" << endl;
+    map<string, long int>::iterator iter;
+    for(iter=phone_book.begin(); iter!=phone_book.end(); iter++)
+    {
+        cout << iter->first << " : " << iter->second << endl;
+    }
+
+    //查找某个人的电话号码
+    cout << "请输入要查询号码的姓名：";
+    string name;
+    cin >> name;
+    iter = phone_book.find(name);
+    if(iter == phone_book.end())
+        cout << name << " : not found!" << endl;
+    else
+        cout << iter->first << " : " << iter->second << endl;
+
+    return 0;
+
+}
