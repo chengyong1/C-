@@ -1,0 +1,53 @@
+//
+// Created by chengyong on 18-3-12.
+//
+//为了提高C++编程的效率，STL中提供了许多容器，包括vector、list、map、set等。
+// 有些容器例如vector可以通过脚标索引的方式访问容器里面的数据，但是大部分的容器不能使用这种方式，
+// 例如list、map、set。STL中每种容器在实现的时候设计了一个内嵌的iterator类，
+// 不同的容器有自己专属的迭代器，使用迭代器来访问容器中的数据。
+// 除此之外，通过迭代器，可以将容器和通用算法结合在一起，只要给予算法不同的迭代器，
+// 就可以对不同容器执行相同的操作，例如find查找函数。
+// 迭代器对指针的一些基本操作如*、->、++、==、!=、=进行了重载，使其具有了遍历复杂数据结构的能力，
+// 其遍历机制取决于所遍历的数据结构，所有迭代的使用和指针的使用非常相似。
+// 通过begin，end函数获取容器的头部和尾部迭代器，end 迭代器不包含在容器之内，
+// 当begin和end返回的迭代器相同时表示容器为空。
+
+#include "bits/stdc++.h"
+using namespace std;
+
+void output(char *info, vector<int> a)
+{
+    cout << info;
+    vector<int>:: iterator iter;
+    for(iter=a.begin(); iter!=a.end(); iter++)
+    {
+        cout << *iter << " ";
+    }
+    cout << endl;
+}
+
+int main()
+{
+    vector<int> v1, v2;
+    for(int i=0; i<5; i++)
+    {
+        v1.push_back(i);
+        v2.push_back(i+3);
+    }
+    output("v1: ", v1);
+    output("v2: ", v2);
+
+
+    //对v1和v2进行merge
+    vector<int> v(v1.size()+v2.size(), 0);  //创建一个容器v来放结果
+    merge(v1.begin(), v1.end(), v2.begin(), v2.end(), v.begin());
+    output("v： ", v);
+
+    //求v1和v2并集
+    vector<int>::iterator iter;
+    iter = set_union(v1.begin(), v1.end(), v2.begin(), v2.end(), v.begin());
+    v.erase(iter, v.end());
+    output("v: ", v);
+
+    return 0;
+}
