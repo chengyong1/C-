@@ -1,0 +1,35 @@
+
+#include "bits/stdc++.h"
+using namespace std;
+
+int main() {
+    vector<int> a={1,20,3,4,5};
+    vector<int>::iterator it1 = a.begin();  //it1指向第一个元素
+    vector<int>::iterator it2 = a.end();    //it2指向最后一个元素的下一个元素
+    cout << *it1 << endl;
+    cout << *(it2-1) << endl;
+    for(int i=0;i<a.size();i++)
+    {
+        cout << *(it1+i) << " ";
+    }
+    //这样也可以输出所有元素
+    cout << endl;
+    vector<int>::iterator iter;
+    for(iter=a.begin();iter!=a.end();iter++)
+    {
+        cout << *iter << " ";
+    }
+    //用max_element找出最大元素,这个在algorithm下
+    cout << "Max element = " << *max_element(it1, it2) << endl;
+    //用accumulate求和,这个在numeric下
+    cout << "Sum = " << accumulate(it1, it2, 0) << endl;
+    //排序试试
+    sort(it1, it2);
+    while(it1!=it2)
+    {
+        cout << *it1 << " ";
+        it1++;
+    }
+    cout << endl;
+    return 0;
+}
