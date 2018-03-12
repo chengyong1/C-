@@ -1,0 +1,38 @@
+//
+// Created by chengyong on 18-3-12.
+//
+//跟vecotr不同的是，list可以进行双向操作，front();vector是连续内存，list是非连续内存
+#include "bits/stdc++.h"
+using namespace std;
+
+void output(list<int> arr)
+{
+    list<int>::iterator iter;
+    for(iter=arr.begin(); iter!=arr.end(); iter++)
+    {
+        cout << *iter << " ";
+    }
+    cout << endl;
+}
+
+int main()
+{
+    int m=5, n=20;
+    list<int> child;
+    for(int i=0; i<n; i++)
+    {
+        child.push_back(i);
+    }
+
+    //output child
+    output(child);
+
+    //输出第一个元素
+    cout << "第一个元素为：" << child.front() << endl;
+
+    //第一个元素出去后输出child
+    child.pop_front();
+    output(child);
+
+    return 0;
+}
