@@ -1,0 +1,150 @@
+//
+// Created by 程勇 on 2018/4/12.
+//
+
+#include "iostream"
+#include "cmath"
+#include "cstdlib"
+
+using namespace std;
+
+enum Sex {male, female};
+struct Data
+{
+    int year, month, day;
+};
+enum Major {math, physics, computer, english};
+
+struct Student
+{
+    int no;
+    char name[20];
+    Sex sex;
+    Data birthDay;
+    char birthPlace[40];
+    Major major;
+};
+
+
+//交换两个数
+void myswap(int *px, int *py)
+{
+    int temp = *px;
+    *px = *py;
+    *py = temp;
+}
+
+//找最大数的位置
+int *mymax(int *start, int num)
+{
+    int maxnum = *start;
+    for(int i=0; i<num; i++)
+    {
+        if(maxnum < *(start+i))
+            maxnum = *(start+i);
+    }
+    return &maxnum;
+}
+
+//C++一个函数只能有一个返回值，需要多个返回值时我们可以把其他返回值放在指针变量里面
+//这是一个求解一元二次方程的函数
+void calculate_roots(double a, double b, double c, double *root1, double *root2)
+{
+    double t = b*b - 4*a*c;
+    if(a==0)
+        cout << "不是一元二次方程";
+    if(t<0)
+        cout << "方程没有实根";
+    if(t==0)
+    {
+        *root1 = *root2 = -b/(2*a);
+        cout << "方程有两个相等的实根";
+    }
+    if(t>0)
+    {
+        t = sqrt(t);
+        *root1 = (-b+t)/(2*a);
+        *root2 = (-b-t)/(2*a);
+        cout << "方程有两个不等的实根";
+    }
+}
+
+
+int main()
+{
+    /*
+     * 不同类型的指针变量
+     */
+    int x = 100;
+    int *p;
+    p = &x;
+    cout << "地址 " << p << " 存放的是 " << *p << endl;
+
+    double y = 1.01;
+    double *pointer1;
+    pointer1 = &y;
+    cout << "地址 " << pointer1 << " 存放的是 " << *pointer1 << endl;
+
+    Student z = {1, "程勇", male, {1997, 10, 26}, "成都", computer};
+    Student *poniterz;
+    poniterz = &z;
+    cout << "pointerz 存放的是 " << poniterz->name << endl;
+    cout << "pointerz 存放的是 " << (*poniterz).name << endl;
+
+    int array[10] = {1, 2, 3, 4, 5, 6, 7 ,8 ,9, 10};
+    int *pointera;
+    pointera = &array[0];
+    cout << "地址 " << pointera << " 存放的是 " << *pointera << endl;
+    cout << "地址 " << pointera+1 << " 存放的是 " << *(pointera+1) << endl;
+    cout << "地址 " << pointera+9 << " 存放的是 " << *(pointera+9) << endl;
+
+    int arr[3][3] = {{1, 2, 3},
+                     {4, 5, 6},
+                     {7, 8, 9}};
+    int *pointerarr;
+    pointerarr = &arr[0][0];
+    for(int i=0; i<3; i++)
+    {
+        for(int j=0; j<3; j++)
+        {
+            cout << "地址 " << pointerarr+3*i+j << " 存放的是 " << *(pointera+3*i+j) << endl;
+        }
+    }
+
+
+    /*
+     * 指针在函数传递参数时的应用
+     */
+    int a = 1, b = 2;
+    myswap(&a, &b);
+    cout << "a = " << a << " b = " << b << endl;
+
+    int *maxnum = mymax(&array[0], 10);
+    cout << "数组array里面最大的数存储位置是" << maxnum << " 值是" << *maxnum << endl;
+
+    double a1=2, b1=10, c1=4, root1, root2;
+    calculate_roots(a1, b1, c1, &root1, &root2);
+    cout << "root1=" << root1 << " root2=" << root2 << endl;
+
+    /*
+     * 指针与动态变量
+     */
+    //new <类型名> [<整形表达式1>]...[<整形表达式n>],表示创建一个动态的n维数组
+    // 第一个整形表达式可以不是常数，其他表达式必须是常数.返回的是动态数组的第一个数的地址
+    int *pv;
+    int n;
+    p = new int[n]; //创建一个一维的长度为n的动态数组
+    p[0]=1;
+    p[100]=100;
+    cout << p << "数组中一个数" << *p << endl;
+    delete []p; //撤销p所指向的动态数组
+
+    //malloc(size)函数,分配一块size大小的内存，并返回该内存空间的首地址，类型为void *
+    //一般需要对返回值类型进行强制转换
+    int *q;
+    q = (int *)malloc(sizeof(int));
+    free(q); //撤销q所指向的动态变量
+
+
+    return 0;
+}
